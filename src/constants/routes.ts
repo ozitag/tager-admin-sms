@@ -11,7 +11,7 @@ const HOME_BREADCRUMB = { url: '/', text: 'Home' };
 export const SMS_TEMPLATE_LIST_ROUTE: CustomRouteConfig = {
   path: SMS_ROUTE_PATHS.TEMPLATE_LIST,
   component: SmsTemplateList,
-  name: 'Templates',
+  name: 'SMS Templates',
   meta: {
     getBreadcrumbs: (route) => [
       HOME_BREADCRUMB,
@@ -23,7 +23,7 @@ export const SMS_TEMPLATE_LIST_ROUTE: CustomRouteConfig = {
 export const SMS_TEMPLATE_FORM_ROUTE: CustomRouteConfig = {
   path: SMS_ROUTE_PATHS.TEMPLATE_FORM,
   component: SmsTemplateForm,
-  name: 'Template form',
+  name: 'SMS Template form',
   meta: {
     getBreadcrumbs: (route) => [
       HOME_BREADCRUMB,
@@ -35,7 +35,7 @@ export const SMS_TEMPLATE_FORM_ROUTE: CustomRouteConfig = {
 export const SMS_LOG_LIST_ROUTE: CustomRouteConfig = {
   path: SMS_ROUTE_PATHS.LOG_LIST,
   component: SmsLogList,
-  name: 'Logs',
+  name: 'SMS Logs',
   meta: {
     getBreadcrumbs: (route) => [
       HOME_BREADCRUMB,
