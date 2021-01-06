@@ -1,11 +1,13 @@
 <template>
   <page title="SMS Logs">
     <template v-slot:content>
-      <base-table
+      <data-table
         :column-defs="columnDefs"
         :row-data="rowData"
         :loading="isRowDataLoading"
         :error-message="errorMessage"
+        :search-query="searchQuery"
+        @change="handleChange"
       >
         <template v-slot:cell(body)="{ row }">
           <body-cell :log="row" />
@@ -13,15 +15,14 @@
         <template v-slot:cell(error)="{ row }">
           <error-cell :log="row" />
         </template>
-      </base-table>
+      </data-table>
     </template>
   </page>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@vue/composition-api';
-import { ColumnDefinition } from '@tager/admin-ui';
-import { useResource } from '@tager/admin-services';
+import { defineComponent } from '@vue/composition-api';
+import { ColumnDefinition, useDataTable } from '@tager/admin-ui';
 
 import { SmsLog } from '../../typings/model';
 import { getSmsLogList } from '../../services/requests';
@@ -60,24 +61,26 @@ export default defineComponent({
   name: 'SmsTemplateList',
   components: { BodyCell, ErrorCell },
   setup(props, context) {
-    const [fetchLogList, { data: logList, loading, error }] = useResource<
-      Array<SmsLog>
-    >({
-      fetchResource: getSmsLogList,
+    const {
+      isLoading: isRowDataLoading,
+      rowData: logList,
+      errorMessage,
+      searchQuery,
+      handleChange,
+    } = useDataTable<SmsLog>({
+      fetchEntityList: (params) => getSmsLogList({ query: params.searchQuery }),
       initialValue: [],
       context,
       resourceName: 'SMS log list',
     });
 
-    onMounted(() => {
-      fetchLogList();
-    });
-
     return {
       columnDefs: COLUMN_DEFS,
       rowData: logList,
-      isRowDataLoading: loading,
-      errorMessage: error,
+      isRowDataLoading,
+      errorMessage,
+      searchQuery,
+      handleChange,
     };
   },
 });

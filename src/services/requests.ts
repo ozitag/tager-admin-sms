@@ -29,6 +29,8 @@ export function updateSmsTemplate(
   });
 }
 
-export function getSmsLogList(): Promise<ResponseBody<Array<SmsLog>>> {
-  return request.get({ path: '/admin/sms/logs' });
+export function getSmsLogList(params?: {
+  query?: string;
+}): Promise<ResponseBody<Array<SmsLog>>> {
+  return request.get({ path: '/admin/sms/logs', params });
 }
