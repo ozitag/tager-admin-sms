@@ -7,6 +7,13 @@
         :loading="isRowDataLoading"
         :error-message="errorMessage"
         :search-query="searchQuery"
+        :pagination="{
+          pageSize,
+          pageNumber,
+          pageCount,
+          disabled: isRowDataLoading,
+          pageSizes: [250, 500, 1000],
+        }"
         @change="handleChange"
       >
         <template v-slot:cell(body)="{ row }">
@@ -67,11 +74,20 @@ export default defineComponent({
       errorMessage,
       searchQuery,
       handleChange,
+      pageSize,
+      pageNumber,
+      pageCount,
     } = useDataTable<SmsLog>({
-      fetchEntityList: (params) => getSmsLogList({ query: params.searchQuery }),
+      fetchEntityList: (params) =>
+        getSmsLogList({
+          query: params.searchQuery,
+          pageNumber: params.pageNumber,
+          pageSize: params.pageSize,
+        }),
       initialValue: [],
       context,
       resourceName: 'SMS log list',
+      pageSize: 250,
     });
 
     return {
@@ -81,6 +97,9 @@ export default defineComponent({
       errorMessage,
       searchQuery,
       handleChange,
+      pageSize,
+      pageNumber,
+      pageCount,
     };
   },
 });
