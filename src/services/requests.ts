@@ -31,6 +31,8 @@ export function updateSmsTemplate(
 
 export function getSmsLogList(params?: {
   query?: string;
+  pageNumber?: number;
+  pageSize?: number;
 }): Promise<ResponseBody<Array<SmsLog>>> {
   return request.get({ path: '/admin/sms/logs', params });
 }
