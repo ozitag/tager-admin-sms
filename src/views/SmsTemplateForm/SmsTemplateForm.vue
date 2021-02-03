@@ -109,7 +109,7 @@ export default defineComponent({
       values.value = convertSmsTemplateToFormValues(smsTemplate.value);
     });
 
-    function submitForm() {
+    function submitForm({ shouldExit }: { shouldExit: boolean }) {
       isSubmitting.value = true;
 
       const updateBody = convertFormValuesToSmsTemplateUpdatePayload(
@@ -119,7 +119,10 @@ export default defineComponent({
       updateSmsTemplate(smsTemplateId.value, updateBody)
         .then(() => {
           errors.value = {};
-          context.root.$router.push(getSmsTemplateListUrl());
+
+          if (shouldExit) {
+            context.root.$router.push(getSmsTemplateListUrl());
+          }
 
           context.root.$toast({
             variant: 'success',
