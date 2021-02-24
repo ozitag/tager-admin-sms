@@ -1,5 +1,5 @@
 <template>
-  <page title="SMS Templates">
+  <page :title="t('sms:SMSTemplates')">
     <template v-slot:content>
       <base-table
         :column-defs="columnDefs"
@@ -19,7 +19,7 @@
         <template v-slot:cell(actions)="{ row }">
           <base-button
             variant="icon"
-            title="Edit"
+            :title="t('sms:edit')"
             :href="getSmsTemplateFormUrl({ templateId: row.id })"
           >
             <svg-icon name="edit"></svg-icon>
@@ -31,37 +31,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from '@vue/composition-api';
-import { ColumnDefinition } from '@tager/admin-ui';
+import { defineComponent, onMounted, SetupContext } from '@vue/composition-api';
+import { ColumnDefinition, useTranslation } from '@tager/admin-ui';
 
 import { SmsTemplateShort } from '../../typings/model';
 import { getSmsTemplateList } from '../../services/requests';
 import { getSmsTemplateFormUrl } from '../../utils/paths';
 import { useResource } from '@tager/admin-services';
 
-const COLUMN_DEFS: Array<ColumnDefinition<SmsTemplateShort>> = [
-  {
-    id: 1,
-    name: 'Name',
-    field: 'name',
-  },
-  {
-    id: 4,
-    name: 'Recipients',
-    field: 'recipients',
-  },
-  {
-    id: 5,
-    name: 'Actions',
-    field: 'actions',
-    style: { width: '80px', textAlign: 'center' },
-    headStyle: { width: '80px', textAlign: 'center' },
-  },
-];
-
 export default defineComponent({
   name: 'SmsTemplateList',
-  setup(props, context) {
+  setup(props, context: SetupContext) {
+    const { t } = useTranslation(context);
+
     const [
       fetchTemplateList,
       { data: templateList, loading, error },
@@ -76,8 +58,29 @@ export default defineComponent({
       fetchTemplateList();
     });
 
+    const columnDefs: Array<ColumnDefinition<SmsTemplateShort>> = [
+      {
+        id: 1,
+        name: t('sms:name'),
+        field: 'name',
+      },
+      {
+        id: 4,
+        name: t('sms:recipients'),
+        field: 'recipients',
+      },
+      {
+        id: 5,
+        name: t('sms:actions'),
+        field: 'actions',
+        style: { width: '80px', textAlign: 'center' },
+        headStyle: { width: '80px', textAlign: 'center' },
+      },
+    ];
+
     return {
-      columnDefs: COLUMN_DEFS,
+      t,
+      columnDefs,
       rowData: templateList,
       isRowDataLoading: loading,
       errorMessage: error,
