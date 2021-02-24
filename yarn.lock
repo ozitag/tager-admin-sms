@@ -1085,26 +1085,26 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
-"@tager/admin-layout@^0.4.8":
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/@tager/admin-layout/-/admin-layout-0.4.8.tgz#4ad9ae647fa8cada02d920673ae6d875be7eba7f"
-  integrity sha512-WMJb9GZp8/3mgY0Ro5dBWL/P+vGbk8TvRj3ve6GNtZd9ooQ2Y2FDg5oYdum62t4SQq8aFP3wxa/DaBx789RLjg==
+"@tager/admin-layout@^0.4.13":
+  version "0.4.13"
+  resolved "https://registry.yarnpkg.com/@tager/admin-layout/-/admin-layout-0.4.13.tgz#7659d76f83a475dc5423aaf96d646318f1a7bb46"
+  integrity sha512-uURPhsU4RmeMNJQopEnVzH4iSKMKi4CpKiwrF17pztBPcRZ4t95sfSov1ZZ9qQdQBo5SP3/j4IrfC33Wh/JAKA==
   dependencies:
     "@babel/runtime" "^7.10.4"
 
-"@tager/admin-services@^0.2.18":
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/@tager/admin-services/-/admin-services-0.2.18.tgz#f5e9baac71f4fb7cdcc22ed88aef317cdbaf0b44"
-  integrity sha512-Cxqai8fxeL/rhQXROsEGJwhall6RVKXf0MX0lKGHxzmQYM3hRI8GJvv9iQ3bgoZwAkNG7hcKLavwt2MDhWK9Ww==
+"@tager/admin-services@^0.2.20":
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/@tager/admin-services/-/admin-services-0.2.20.tgz#750d461080b0c624440177c6d24cbdcdd25e113e"
+  integrity sha512-3jzMIp1rQHXcM6u93h4ul222g4HxqMTfeuP5d6AGNAbK/yMcPO+UPTpZ+d8/W43gBSL0W67HO67glD1s1RVRMQ==
   dependencies:
     i18next "^19.7.0"
     nanoid "^3.1.12"
     zod "^1.11.9"
 
-"@tager/admin-ui@^0.8.23":
-  version "0.8.23"
-  resolved "https://registry.yarnpkg.com/@tager/admin-ui/-/admin-ui-0.8.23.tgz#dc5978139fc420fc2d923999bdd59817a19a8d27"
-  integrity sha512-HP1E+asVWi6+YiRrFV3iPgSjTJq88ikHNONkSl0G7zeCAfNwCNs20+kKZlqapekYKdeEkb7t8nSkQhMaa+BMPQ==
+"@tager/admin-ui@^0.8.42":
+  version "0.8.42"
+  resolved "https://registry.yarnpkg.com/@tager/admin-ui/-/admin-ui-0.8.42.tgz#575386cea761c83b8cf878bdbeb7db79d2205af4"
+  integrity sha512-sQy9TlFG0/r6vCNEdE9qPN78W6hJHkYz8lt6DC8jS9kV42SH+4kIVBP4SvanxqEFr4a9DOC8oQoi8ia8Fdcp7g==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@ckeditor/ckeditor5-vue" "^1.0.2"
@@ -1115,8 +1115,12 @@
     lodash.debounce "^4.0.8"
     lodash.get "^4.4.2"
     lodash.kebabcase "^4.1.1"
+    lodash.round "^4.0.4"
+    resize-observer-polyfill "^1.5.1"
     smoothscroll-polyfill "^0.4.4"
+    tinycolor2 "^1.4.2"
     vue-color "^2.7.1"
+    vuedraggable "^2.24.3"
 
 "@tager/admin-wysiwyg@^0.1.0":
   version "0.1.0"
@@ -6113,6 +6117,11 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
+lodash.round@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.round/-/lodash.round-4.0.4.tgz#101b6ba5c6cecc998f2abbe80b6029affd25d262"
+  integrity sha1-EBtrpcbOzJmPKrvoC2Apr/0l0mI=
+
 lodash.throttle@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
@@ -8227,6 +8236,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -8712,6 +8726,11 @@ sort-keys@^1.0.0:
   integrity sha1-RBttTTRnmPG05J6JIK37oOVD+a0=
   dependencies:
     is-plain-obj "^1.0.0"
+
+sortablejs@1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.10.2.tgz#6e40364d913f98b85a14f6678f92b5c1221f5290"
+  integrity sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==
 
 source-list-map@^2.0.0:
   version "2.0.1"
@@ -9260,7 +9279,7 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tinycolor2@^1.1.2:
+tinycolor2@^1.1.2, tinycolor2@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
   integrity sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==
@@ -9814,6 +9833,13 @@ vue@2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vuedraggable@^2.24.3:
+  version "2.24.3"
+  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.24.3.tgz#43c93849b746a24ce503e123d5b259c701ba0d19"
+  integrity sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==
+  dependencies:
+    sortablejs "1.10.2"
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"

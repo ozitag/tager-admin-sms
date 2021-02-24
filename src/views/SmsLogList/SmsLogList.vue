@@ -1,5 +1,5 @@
 <template>
-  <page title="SMS Logs">
+  <page :title="t('sms:SMSLogs')">
     <template v-slot:content>
       <data-table
         :column-defs="columnDefs"
@@ -27,8 +27,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
-import { ColumnDefinition, useDataTable } from '@tager/admin-ui';
+import { defineComponent, SetupContext } from '@vue/composition-api';
+import {
+  ColumnDefinition,
+  useDataTable,
+  useTranslation,
+} from '@tager/admin-ui';
 
 import { SmsLog } from '../../typings/model';
 import { getSmsLogList } from '../../services/requests';
@@ -37,36 +41,12 @@ import { capitalizeWord } from '../../utils/common';
 import BodyCell from './components/BodyCell.vue';
 import ErrorCell from './components/ErrorCell.vue';
 
-const COLUMN_DEFS: Array<ColumnDefinition<SmsLog>> = [
-  {
-    id: 1,
-    name: 'ID',
-    field: 'id',
-    style: { width: '50px', textAlign: 'center' },
-    headStyle: { width: '50px', textAlign: 'center' },
-  },
-  { id: 3, name: 'Recipient', field: 'recipient' },
-  { id: 5, name: 'Body', field: 'body' },
-  {
-    id: 6,
-    name: 'Status',
-    field: 'status',
-    format: ({ row }) => capitalizeWord(row.status),
-  },
-  { id: 7, name: 'Date', field: 'createdAt', type: 'datetime' },
-  {
-    id: 9,
-    name: 'Error',
-    field: 'error',
-    useCustomDataCell: true,
-    headStyle: { width: '300px' },
-  },
-];
-
 export default defineComponent({
   name: 'SmsTemplateList',
   components: { BodyCell, ErrorCell },
-  setup(props, context) {
+  setup(props, context: SetupContext) {
+    const { t } = useTranslation(context);
+
     const {
       isLoading: isRowDataLoading,
       rowData: logList,
@@ -89,8 +69,35 @@ export default defineComponent({
       pageSize: 250,
     });
 
+    const columnDefs: Array<ColumnDefinition<SmsLog>> = [
+      {
+        id: 1,
+        name: 'ID',
+        field: 'id',
+        style: { width: '50px', textAlign: 'center' },
+        headStyle: { width: '50px', textAlign: 'center' },
+      },
+      { id: 3, name: t('sms:recipient'), field: 'recipient' },
+      { id: 5, name: t('sms:body'), field: 'body' },
+      {
+        id: 6,
+        name: t('sms:status'),
+        field: 'status',
+        format: ({ row }) => capitalizeWord(row.status),
+      },
+      { id: 7, name: t('sms:date'), field: 'createdAt', type: 'datetime' },
+      {
+        id: 9,
+        name: t('sms:error'),
+        field: 'error',
+        useCustomDataCell: true,
+        headStyle: { width: '300px' },
+      },
+    ];
+
     return {
-      columnDefs: COLUMN_DEFS,
+      t,
+      columnDefs,
       rowData: logList,
       isRowDataLoading,
       errorMessage,

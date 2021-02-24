@@ -6,16 +6,14 @@ import SmsLogList from '../views/SmsLogList';
 
 import { SMS_ROUTE_PATHS } from './paths';
 
-const HOME_BREADCRUMB = { url: '/', text: 'Home' };
-
 export const SMS_TEMPLATE_LIST_ROUTE: CustomRouteConfig = {
   path: SMS_ROUTE_PATHS.TEMPLATE_LIST,
   component: SmsTemplateList,
   name: 'SMS Templates',
   meta: {
-    getBreadcrumbs: (route) => [
-      HOME_BREADCRUMB,
-      { url: route.path, text: 'Templates' },
+    getBreadcrumbs: (route, t) => [
+      { url: '/', text: t('sms:home') },
+      { url: route.path, text: t('sms:templates') },
     ],
   },
 };
@@ -25,9 +23,9 @@ export const SMS_TEMPLATE_FORM_ROUTE: CustomRouteConfig = {
   component: SmsTemplateForm,
   name: 'SMS Template form',
   meta: {
-    getBreadcrumbs: (route) => [
-      HOME_BREADCRUMB,
-      { url: route.path, text: 'Template form' },
+    getBreadcrumbs: (route, t) => [
+      { url: '/', text: t('sms:home') },
+      { url: route.path, text: t('sms:templateForm') },
     ],
   },
 };
@@ -37,9 +35,9 @@ export const SMS_LOG_LIST_ROUTE: CustomRouteConfig = {
   component: SmsLogList,
   name: 'SMS Logs',
   meta: {
-    getBreadcrumbs: (route) => [
-      HOME_BREADCRUMB,
-      { url: route.path, text: 'Logs' },
+    getBreadcrumbs: (route, t) => [
+      { url: '/', text: t('sms:home') },
+      { url: route.path, text: t('sms:logs') },
     ],
   },
 };

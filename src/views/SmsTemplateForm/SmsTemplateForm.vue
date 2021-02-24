@@ -13,7 +13,7 @@
         v-model="values.recipients"
         name="recipients"
         :error="errors.recipients"
-        label="Recipients"
+        :label="t('sms:recipients')"
       />
 
       <template>
@@ -21,14 +21,14 @@
           v-model="values.body"
           name="body"
           :error="errors.body"
-          label="Body"
+          :label="t('sms:body')"
         />
 
         <div
           v-if="smsTemplate && smsTemplate.fields.length > 0"
           class="legend-vars"
         >
-          <h4 class="title">Template variables</h4>
+          <h4 class="title">{{ t('sms:templateVariables') }}</h4>
           <ul>
             <li v-for="variable of smsTemplate.fields" :key="variable.name">
               <span>{{ variable.label }}</span> -
@@ -37,7 +37,7 @@
               </span>
               <base-button
                 variant="icon"
-                title="Copy"
+                :title="t('sms:copy')"
                 @click="copyVarTemplate(variable.name)"
               >
                 <svg-icon name="contentCopy" />
@@ -56,6 +56,7 @@ import {
   defineComponent,
   onMounted,
   ref,
+  SetupContext,
   watch,
 } from '@vue/composition-api';
 import {
@@ -72,10 +73,13 @@ import {
   FormValues,
 } from './SmsTemplateForm.helpers';
 import { SmsTemplateFull } from '../../typings/model';
+import { useTranslation } from '@tager/admin-ui';
 
 export default defineComponent({
   name: 'SmsTemplateForm',
-  setup(props, context) {
+  setup(props, context: SetupContext) {
+    const { t } = useTranslation(context);
+
     /** Sms template fetching */
 
     const smsTemplateId = computed<string>(
@@ -126,8 +130,8 @@ export default defineComponent({
 
           context.root.$toast({
             variant: 'success',
-            title: 'Success',
-            body: `SMS template has been successfully updated`,
+            title: t('sms:success'),
+            body: t('sms:SMSTemplateHasBeenSuccessfullyUpdated'),
           });
         })
         .catch((error) => {
@@ -135,8 +139,8 @@ export default defineComponent({
           errors.value = convertRequestErrorToMap(error);
           context.root.$toast({
             variant: 'danger',
-            title: 'Error',
-            body: `SMS template update has been failed`,
+            title: t('sms:error'),
+            body: t('sms:SMSTemplateUpdateHasBeenFailed'),
           });
         })
         .finally(() => {
@@ -156,8 +160,8 @@ export default defineComponent({
 
     const pageTitle = computed<string>(() =>
       smsTemplate.value
-        ? `SMS template "${smsTemplate.value.name}"`
-        : 'SMS template'
+        ? `${t('sms:SMSTemplate')} "${smsTemplate.value.name}"`
+        : t('sms:SMSTemplate')
     );
 
     const isContentLoading = computed<boolean>(
@@ -165,6 +169,7 @@ export default defineComponent({
     );
 
     return {
+      t,
       templateListRoutePath: getSmsTemplateListUrl(),
       values,
       errors,
