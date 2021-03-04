@@ -17,34 +17,14 @@
       />
 
       <template>
-        <form-field-rich-text-input
+        <form-field-message-template
           v-model="values.body"
-          name="body"
-          :error="errors.body"
           :label="t('sms:body')"
+          :variable-list="smsTemplate ? smsTemplate.fields : []"
+          :error="errors.body"
+          type="textArea"
+          name="body"
         />
-
-        <div
-          v-if="smsTemplate && smsTemplate.fields.length > 0"
-          class="legend-vars"
-        >
-          <h4 class="title">{{ t('sms:templateVariables') }}</h4>
-          <ul>
-            <li v-for="variable of smsTemplate.fields" :key="variable.name">
-              <span>{{ variable.label }}</span> -
-              <span>
-                {{ getKeyTemplate(variable.name) }}
-              </span>
-              <base-button
-                variant="icon"
-                :title="t('sms:copy')"
-                @click="copyVarTemplate(variable.name)"
-              >
-                <svg-icon name="contentCopy" />
-              </base-button>
-            </li>
-          </ul>
-        </div>
       </template>
     </form>
   </page>
@@ -149,15 +129,6 @@ export default defineComponent({
     }
 
     /** Misc */
-
-    function getKeyTemplate(key: string): string {
-      return `{{${key}}}`;
-    }
-
-    function copyVarTemplate(key: string) {
-      navigator.clipboard.writeText(getKeyTemplate(key)).catch(console.error);
-    }
-
     const pageTitle = computed<string>(() =>
       smsTemplate.value
         ? `${t('sms:SMSTemplate')} "${smsTemplate.value.name}"`
@@ -174,8 +145,6 @@ export default defineComponent({
       values,
       errors,
       pageTitle,
-      copyVarTemplate,
-      getKeyTemplate,
       submitForm,
       isSubmitting,
       isContentLoading,
@@ -185,23 +154,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.legend-vars {
-  h4 {
-    margin-bottom: 0.5rem;
-  }
-  ul {
-    display: inline-block;
-    padding-left: 1.2rem;
-    list-style-type: decimal;
-
-    li:not(:last-child) {
-      border-bottom: 1px solid #eee;
-    }
-  }
-
-  button {
-    margin-left: 0.5rem;
-  }
-}
-</style>
+<style scoped lang="scss"></style>
