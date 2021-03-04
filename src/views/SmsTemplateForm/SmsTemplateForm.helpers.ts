@@ -2,6 +2,7 @@ import { Nullable } from '@tager/admin-services';
 
 import { SmsTemplateFull } from '../../typings/model';
 import { SmsTemplateUpdatePayload } from '../../services/requests';
+import { VariableType } from '@tager/admin-ui';
 
 export type FormValues = {
   body: string;
@@ -33,4 +34,13 @@ export function convertFormValuesToSmsTemplateUpdatePayload(
       .split(',')
       .filter((recipient) => recipient.trim().length > 0),
   };
+}
+
+export function convertFormValuesToVariableList(
+  variables: SmsTemplateFull['fields']
+): Array<VariableType> {
+  return variables.map((variable) => ({
+    label: variable.label,
+    key: variable.name,
+  }));
 }

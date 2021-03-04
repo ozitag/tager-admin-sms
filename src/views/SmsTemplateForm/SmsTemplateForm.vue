@@ -20,7 +20,7 @@
         <form-field-message-template
           v-model="values.body"
           :label="t('sms:body')"
-          :variable-list="smsTemplate ? smsTemplate.fields : []"
+          :variable-list="variableList"
           :error="errors.body"
           type="textArea"
           name="body"
@@ -49,11 +49,12 @@ import { getSmsTemplate, updateSmsTemplate } from '../../services/requests';
 import { getSmsTemplateListUrl } from '../../utils/paths';
 import {
   convertFormValuesToSmsTemplateUpdatePayload,
+  convertFormValuesToVariableList,
   convertSmsTemplateToFormValues,
   FormValues,
 } from './SmsTemplateForm.helpers';
 import { SmsTemplateFull } from '../../typings/model';
-import { useTranslation } from '@tager/admin-ui';
+import { useTranslation, VariableType } from '@tager/admin-ui';
 
 export default defineComponent({
   name: 'SmsTemplateForm',
@@ -139,6 +140,12 @@ export default defineComponent({
       () => isSmsTemplateLoading.value
     );
 
+    const variableList = computed<Array<VariableType>>(() => {
+      return smsTemplate.value
+        ? convertFormValuesToVariableList(smsTemplate.value.fields)
+        : [];
+    });
+
     return {
       t,
       templateListRoutePath: getSmsTemplateListUrl(),
@@ -148,7 +155,7 @@ export default defineComponent({
       submitForm,
       isSubmitting,
       isContentLoading,
-      smsTemplate,
+      variableList,
     };
   },
 });
