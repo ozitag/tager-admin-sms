@@ -1,4 +1,4 @@
-const EN = {
+export const EN = {
   home: 'Home',
   templates: 'Templates',
   logs: 'Logs',
@@ -6,6 +6,8 @@ const EN = {
   SMSTemplate: 'SMS template',
   SMSTemplates: 'SMS Templates',
   edit: 'Edit',
+  save: 'Save',
+  saveAndExit: 'Save and exit',
   name: 'Name',
   recipients: 'Recipients',
   actions: 'Actions',
@@ -23,5 +25,3 @@ const EN = {
   recipient: 'Recipient',
   date: 'Date',
 };
-
-export default EN;

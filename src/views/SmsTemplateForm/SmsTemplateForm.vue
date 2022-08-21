@@ -1,33 +1,38 @@
 <template>
-  <page
-    :title="pageTitle"
-    :is-content-loading="isContentLoading"
-    :footer="{
-      backHref: templateListRoutePath,
-      onSubmit: submitForm,
-      isSubmitting: isSubmitting,
-    }"
-  >
+  <Page :title="pageTitle" :is-content-loading="isContentLoading">
     <form novalidate @submit.prevent>
-      <form-field
-        v-model="values.recipients"
+      <FormField
+        v-model:value="values.recipients"
         name="recipients"
         :error="errors.recipients"
-        :label="t('sms:recipients')"
+        :label="$i18n.t('sms:recipients')"
       />
-
-      <template>
-        <form-field-message-template
-          v-model="values.body"
-          :label="t('sms:body')"
-          :variable-list="smsTemplate ? smsTemplate.fields : []"
-          :error="errors.body"
-          type="textArea"
-          name="body"
-        />
-      </template>
+      <FormFieldMessageTemplate
+        v-model:value="values.body"
+        :label="$i18n.t('sms:body')"
+        :variable-list="
+          smsTemplate
+            ? smsTemplate.fields.map((item) => {
+                return { ...item, key: item.name };
+              })
+            : []
+        "
+        :error="errors.body"
+        type="textArea"
+        name="body"
+      />
     </form>
-  </page>
+
+    <template #footer>
+      <FormFooter
+        :back-href="templateListRoutePath"
+        :is-submitting="isSubmitting"
+        :submit-and-exit-label="$i18n.t('sms:saveAndExit')"
+        :submit-label="$i18n.t('sms:save')"
+        @submit="submitForm"
+      />
+    </template>
+  </Page>
 </template>
 
 <script lang="ts">
@@ -38,41 +43,63 @@ import {
   ref,
   SetupContext,
   watch,
-} from '@vue/composition-api';
+} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import {
   convertRequestErrorToMap,
+  navigateBack,
   Nullable,
+  useI18n,
   useResource,
+  useToast,
 } from '@tager/admin-services';
+import {
+  FormField,
+  FormFieldMessageTemplate,
+  FormFooter,
+  TagerFormSubmitEvent,
+} from '@tager/admin-ui';
+import { Page } from '@tager/admin-layout';
 
 import { getSmsTemplate, updateSmsTemplate } from '../../services/requests';
 import { getSmsTemplateListUrl } from '../../utils/paths';
+import { SmsTemplateFull } from '../../typings/model';
+
 import {
   convertFormValuesToSmsTemplateUpdatePayload,
   convertSmsTemplateToFormValues,
   FormValues,
 } from './SmsTemplateForm.helpers';
-import { SmsTemplateFull } from '../../typings/model';
-import { useTranslation } from '@tager/admin-ui';
 
 export default defineComponent({
   name: 'SmsTemplateForm',
-  setup(props, context: SetupContext) {
-    const { t } = useTranslation(context);
+  components: { FormFooter, FormFieldMessageTemplate, FormField, Page },
+  setup() {
+    const { t } = useI18n();
+
+    const toast = useToast();
+    const route = useRoute();
+    const router = useRouter();
 
     /** Sms template fetching */
 
-    const smsTemplateId = computed<string>(
-      () => context.root.$route.params.templateId
+    const smsTemplateId = computed(
+      () => route.params.templateId as string | undefined
     );
 
     const [
       fetchSmsTemplate,
       { data: smsTemplate, loading: isSmsTemplateLoading },
     ] = useResource<Nullable<SmsTemplateFull>>({
-      fetchResource: () => getSmsTemplate(smsTemplateId.value),
+      fetchResource: () => {
+        if (smsTemplateId.value) {
+          return getSmsTemplate(smsTemplateId.value);
+        }
+
+        return Promise.resolve({ data: null });
+      },
       initialValue: null,
-      context,
       resourceName: 'SMS template',
     });
 
@@ -93,22 +120,22 @@ export default defineComponent({
       values.value = convertSmsTemplateToFormValues(smsTemplate.value);
     });
 
-    function submitForm({ shouldExit }: { shouldExit: boolean }) {
+    function submitForm({ type }: TagerFormSubmitEvent) {
       isSubmitting.value = true;
 
       const updateBody = convertFormValuesToSmsTemplateUpdatePayload(
         values.value
       );
 
-      updateSmsTemplate(smsTemplateId.value, updateBody)
+      updateSmsTemplate(smsTemplateId.value || '', updateBody)
         .then(() => {
           errors.value = {};
 
-          if (shouldExit) {
-            context.root.$router.push(getSmsTemplateListUrl());
+          if (type === 'save_exit') {
+            navigateBack(router, getSmsTemplateListUrl());
           }
 
-          context.root.$toast({
+          toast.show({
             variant: 'success',
             title: t('sms:success'),
             body: t('sms:SMSTemplateHasBeenSuccessfullyUpdated'),
@@ -117,7 +144,7 @@ export default defineComponent({
         .catch((error) => {
           console.error(error);
           errors.value = convertRequestErrorToMap(error);
-          context.root.$toast({
+          toast.show({
             variant: 'danger',
             title: t('sms:error'),
             body: t('sms:SMSTemplateUpdateHasBeenFailed'),

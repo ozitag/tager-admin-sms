@@ -7,12 +7,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api';
+import { computed, defineComponent, ref } from 'vue';
+
 import { SmsLog } from '../../../typings/model';
 
 type Props = Readonly<{ log: SmsLog }>;
 
-export default defineComponent<Props>({
+export default defineComponent({
   name: 'SmsErrorCell',
   props: {
     log: {

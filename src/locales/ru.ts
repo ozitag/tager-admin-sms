@@ -1,6 +1,6 @@
-import EN from './en';
+import { EN } from './en';
 
-const RU: typeof EN = {
+export const RU: typeof EN = {
   home: 'Главная',
   templates: 'Шаблоны',
   logs: 'Логи',
@@ -8,6 +8,8 @@ const RU: typeof EN = {
   SMSTemplate: 'SMS шаблон',
   SMSTemplates: 'SMS шаблоны',
   edit: 'Редактировать',
+  save: 'Сохранить',
+  saveAndExit: 'Сохранить и выйти',
   name: 'Имя',
   recipients: 'Получатели',
   actions: 'Действия',
@@ -24,5 +26,3 @@ const RU: typeof EN = {
   recipient: 'Получатель',
   date: 'Дата',
 };
-
-export default RU;

@@ -1,14 +1,14 @@
 <template>
-  <page :title="t('sms:SMSTemplates')">
-    <template v-slot:content>
-      <base-table
+  <Page :title="$i18n.t('sms:SMSTemplates')">
+    <template #content>
+      <BaseTable
         :column-defs="columnDefs"
         :row-data="rowData"
         :loading="isRowDataLoading"
         :error-message="errorMessage"
         enumerable
       >
-        <template v-slot:cell(recipients)="{ row }">
+        <template #cell(recipients)="{ row }">
           <ul>
             <li v-for="(recipient, index) of row.recipients" :key="index">
               {{ recipient }}
@@ -16,43 +16,48 @@
           </ul>
         </template>
 
-        <template v-slot:cell(actions)="{ row }">
-          <base-button
+        <template #cell(actions)="{ row }">
+          <BaseButton
             variant="icon"
-            :title="t('sms:edit')"
+            :title="$i18n.t('sms:edit')"
             :href="getSmsTemplateFormUrl({ templateId: row.id })"
           >
-            <svg-icon name="edit"></svg-icon>
-          </base-button>
+            <EditIcon />
+          </BaseButton>
         </template>
-      </base-table>
+      </BaseTable>
     </template>
-  </page>
+  </Page>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, SetupContext } from '@vue/composition-api';
-import { ColumnDefinition, useTranslation } from '@tager/admin-ui';
+import { defineComponent, onMounted } from 'vue';
+
+import {
+  BaseButton,
+  BaseTable,
+  ColumnDefinition,
+  EditIcon,
+} from '@tager/admin-ui';
+import { useI18n, useResource } from '@tager/admin-services';
+import { Page } from '@tager/admin-layout';
 
 import { SmsTemplateShort } from '../../typings/model';
 import { getSmsTemplateList } from '../../services/requests';
 import { getSmsTemplateFormUrl } from '../../utils/paths';
-import { useResource } from '@tager/admin-services';
 
 export default defineComponent({
   name: 'SmsTemplateList',
-  setup(props, context: SetupContext) {
-    const { t } = useTranslation(context);
+  components: { EditIcon, BaseButton, BaseTable, Page },
+  setup() {
+    const { t } = useI18n();
 
-    const [
-      fetchTemplateList,
-      { data: templateList, loading, error },
-    ] = useResource<Array<SmsTemplateShort>>({
-      fetchResource: getSmsTemplateList,
-      initialValue: [],
-      context,
-      resourceName: 'SMS template list',
-    });
+    const [fetchTemplateList, { data: templateList, loading, error }] =
+      useResource<Array<SmsTemplateShort>>({
+        fetchResource: getSmsTemplateList,
+        initialValue: [],
+        resourceName: 'SMS template list',
+      });
 
     onMounted(() => {
       fetchTemplateList();

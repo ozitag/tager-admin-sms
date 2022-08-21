@@ -7,6 +7,7 @@ yalc.lock
 src/config/app.json
 
 # local env files
+.env
 .env.local
 .env.*.local
 

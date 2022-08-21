@@ -1,7 +1,7 @@
 <template>
-  <page :title="t('sms:SMSLogs')">
-    <template v-slot:content>
-      <data-table
+  <Page :title="$i18n.t('sms:SMSLogs')">
+    <template #content>
+      <DataTable
         :column-defs="columnDefs"
         :row-data="rowData"
         :loading="isRowDataLoading"
@@ -15,24 +15,23 @@
         }"
         @change="handleChange"
       >
-        <template v-slot:cell(body)="{ row }">
-          <body-cell :log="row" />
+        <template #cell(body)="{ row }">
+          <BodyCell :log="row" />
         </template>
-        <template v-slot:cell(error)="{ row }">
-          <error-cell :log="row" />
+        <template #cell(error)="{ row }">
+          <ErrorCell :log="row" />
         </template>
-      </data-table>
+      </DataTable>
     </template>
-  </page>
+  </Page>
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext } from '@vue/composition-api';
-import {
-  ColumnDefinition,
-  useDataTable,
-  useTranslation,
-} from '@tager/admin-ui';
+import { defineComponent } from 'vue';
+
+import { ColumnDefinition, useDataTable, DataTable } from '@tager/admin-ui';
+import { useI18n } from '@tager/admin-services';
+import { Page } from '@tager/admin-layout';
 
 import { SmsLog } from '../../typings/model';
 import { getSmsLogList } from '../../services/requests';
@@ -43,9 +42,9 @@ import ErrorCell from './components/ErrorCell.vue';
 
 export default defineComponent({
   name: 'SmsTemplateList',
-  components: { BodyCell, ErrorCell },
-  setup(props, context: SetupContext) {
-    const { t } = useTranslation(context);
+  components: { Page, BodyCell, ErrorCell, DataTable },
+  setup() {
+    const { t } = useI18n();
 
     const {
       isLoading: isRowDataLoading,
@@ -64,7 +63,6 @@ export default defineComponent({
           pageSize: params.pageSize,
         }),
       initialValue: [],
-      context,
       resourceName: 'SMS log list',
       pageSize: 250,
     });

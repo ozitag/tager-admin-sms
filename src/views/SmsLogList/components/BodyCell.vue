@@ -1,24 +1,24 @@
 <template>
   <div>
     <p v-if="isOpen" class="sms-body" v-html="log.body" />
-    <base-button
+    <BaseButton
       variant="outline-secondary"
       class="toggle-button"
       @click="toggleBody"
     >
       {{ isOpen ? 'Hide Body' : 'View Body' }}
-    </base-button>
+    </BaseButton>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api';
-import { SmsLog } from '../../../typings/model';
+import { defineComponent, ref } from 'vue';
 
-type Props = Readonly<{ log: SmsLog }>;
+import { BaseButton } from '@tager/admin-ui';
 
-export default defineComponent<Props>({
+export default defineComponent({
   name: 'SmsBodyCell',
+  components: { BaseButton },
   props: {
     log: {
       type: Object,
