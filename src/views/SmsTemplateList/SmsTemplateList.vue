@@ -5,7 +5,7 @@
         :column-defs="columnDefs"
         :row-data="rowData"
         :loading="isRowDataLoading"
-        :error-message="errorMessage"
+        :error-message="errorMessage ?? undefined"
         enumerable
       >
         <template #cell(recipients)="{ row }">
@@ -36,13 +36,13 @@ import { defineComponent, onMounted } from 'vue';
 import {
   BaseButton,
   BaseTable,
-  ColumnDefinition,
+  type ColumnDefinition,
   EditIcon,
 } from '@tager/admin-ui';
 import { useI18n, useResource } from '@tager/admin-services';
 import { Page } from '@tager/admin-layout';
 
-import { SmsTemplateShort } from '../../typings/model';
+import { type SmsTemplateShort } from '../../typings/model';
 import { getSmsTemplateList } from '../../services/requests';
 import { getSmsTemplateFormUrl } from '../../utils/paths';
 

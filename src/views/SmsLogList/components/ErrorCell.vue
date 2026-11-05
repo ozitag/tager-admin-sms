@@ -9,7 +9,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 
-import { SmsLog } from '../../../typings/model';
+import { type SmsLog } from '../../../typings/model';
 
 type Props = Readonly<{ log: SmsLog }>;
 

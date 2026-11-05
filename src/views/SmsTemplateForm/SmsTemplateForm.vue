@@ -41,7 +41,7 @@ import {
   defineComponent,
   onMounted,
   ref,
-  SetupContext,
+  type SetupContext,
   watch,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -49,7 +49,7 @@ import { useRoute, useRouter } from 'vue-router';
 import {
   convertRequestErrorToMap,
   navigateBack,
-  Nullable,
+  type Nullable,
   useI18n,
   useResource,
   useToast,
@@ -58,18 +58,18 @@ import {
   FormField,
   FormFieldMessageTemplate,
   FormFooter,
-  TagerFormSubmitEvent,
+  type TagerFormSubmitEvent,
 } from '@tager/admin-ui';
 import { Page } from '@tager/admin-layout';
 
 import { getSmsTemplate, updateSmsTemplate } from '../../services/requests';
 import { getSmsTemplateListUrl } from '../../utils/paths';
-import { SmsTemplateFull } from '../../typings/model';
+import { type SmsTemplateFull } from '../../typings/model';
 
 import {
   convertFormValuesToSmsTemplateUpdatePayload,
   convertSmsTemplateToFormValues,
-  FormValues,
+  type FormValues,
 } from './SmsTemplateForm.helpers';
 
 export default defineComponent({

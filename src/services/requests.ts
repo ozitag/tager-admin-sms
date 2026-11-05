@@ -1,6 +1,6 @@
-import { Nullable, request, ResponseBody } from '@tager/admin-services';
+import { type Nullable, request, type ResponseBody } from '@tager/admin-services';
 
-import { SmsLog, SmsTemplateShort, SmsTemplateFull } from '../typings/model';
+import { type SmsLog, type SmsTemplateShort, type SmsTemplateFull } from '../typings/model';
 
 export function getSmsTemplateList(): Promise<
   ResponseBody<Array<SmsTemplateShort>>

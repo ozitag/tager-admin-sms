@@ -1,7 +1,7 @@
-import { Nullable } from '@tager/admin-services';
+import { type Nullable } from '@tager/admin-services';
 
-import { SmsTemplateFull } from '../../typings/model';
-import { SmsTemplateUpdatePayload } from '../../services/requests';
+import { type SmsTemplateFull } from '../../typings/model';
+import { type SmsTemplateUpdatePayload } from '../../services/requests';
 
 export type FormValues = {
   body: string;

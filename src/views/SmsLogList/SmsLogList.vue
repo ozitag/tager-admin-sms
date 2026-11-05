@@ -29,11 +29,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { ColumnDefinition, useDataTable, DataTable } from '@tager/admin-ui';
+import { type ColumnDefinition, useDataTable, DataTable } from '@tager/admin-ui';
 import { useI18n } from '@tager/admin-services';
 import { Page } from '@tager/admin-layout';
 
-import { SmsLog } from '../../typings/model';
+import { type SmsLog } from '../../typings/model';
 import { getSmsLogList } from '../../services/requests';
 import { capitalizeWord } from '../../utils/common';
 

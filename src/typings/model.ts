@@ -1,4 +1,4 @@
-import { Nullable } from '@tager/admin-services';
+import { type Nullable } from '@tager/admin-services';
 
 export type SmsTemplateShort = {
   id: number;
